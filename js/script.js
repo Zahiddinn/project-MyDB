@@ -17,14 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
     formAdd.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        const newFilm = addInput.value;
+        let newFilm = addInput.value;
         const favorite = checkBox.checked;
 
-        movieDB.movies.push(newFilm);
-        sortArr(movieDB.movies);
+        if (newFilm) {
+            movieDB.movies.push(newFilm);
+            sortArr(movieDB.movies);
 
-        createMovieList(movieDB.movies, moviesList);
-        event.target.reset();
+            createMovieList(movieDB.movies, moviesList);
+            event.target.reset();
+        }
+
+
     })
 
     const movieDB = {
@@ -74,6 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 </li>
                 `
         });
+
+        document.querySelectorAll('.delete').forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                btn.parentElement.remove();
+                movieDB.movies.splice(i, 1);
+                createMovieList(films, parent);
+            })
+        })
     }
 
 
